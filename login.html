@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login – YUMBRIX</title>
+  <link rel="stylesheet" href="styles/login.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KZ83TELRVB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KZ83TELRVB');
+</script>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Admin Login</h2>
+    <form id="login-form">
+      <input type="email" id="admin-email" placeholder="Email" required />
+      <input type="password" id="admin-password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <p class="error-message" id="login-error"></p>
+    </form>
+  </div>
+
+  <!-- No Firebase scripts anymore -->
+  <script src="script/login.js"></script>
+</body>
+</html>

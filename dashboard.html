@@ -1,0 +1,79 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – YUMBRIX</title>
+  <link rel="stylesheet" href="styles/dashboard.css" />
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KZ83TELRVB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KZ83TELRVB');
+</script>
+</head>
+<body>
+  <div class="dashboard-wrapper">
+    <h1>Welcome, Admin</h1>
+    <button onclick="logout()">Logout</button>
+
+    <!-- Add Product Form -->
+    <section>
+      <h2>Add New Product</h2>
+    <form id="product-form">
+  <select id="product-category">
+    <option value="fashion">Fashion</option>
+    <option value="electronics">Electronics</option>
+    <option value="beauty">Beauty & Health</option>
+  </select>
+  <input type="text" id="product-name" placeholder="Product name" required />
+  <input type="number" id="product-price" placeholder="Price (USD)" required />
+  <input type="file" id="product-image" accept="image/*" required />
+  <!-- Add this -->
+  <div id="options-wrapper" style="display: none;">
+    <input type="text" id="product-options" placeholder="Options (comma-separated)" />
+  </div>
+
+  <button type="submit">Add Product</button>
+  <p id="edit-status" style="color: orange; display: none;">✏️ You are editing a product</p>
+</form>
+</section>
+
+    <!-- Product List -->
+    <section>
+      <h2>Product List</h2>
+      <div id="product-list"></div>
+    </section>
+
+    <!-- Reset Button -->
+    <section>
+      <h2>Reset to Default</h2>
+      <button id="reset-button" class="danger">Reset All Products</button>
+      <p id="reset-status"></p>
+    </section>
+  </div>
+
+  <script src="script/dashboard.js"></script>
+  <script>
+    if (localStorage.getItem("isYumbrixAdmin") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
+  <script>
+  // Redirect to login if not authenticated
+  if (localStorage.getItem("isYumbrixAdmin") !== "true") {
+    window.location.href = "login.html";
+  }
+
+  // Clear auth when navigating away from dashboard
+  window.addEventListener("beforeunload", () => {
+    localStorage.removeItem("isYumbrixAdmin");
+  });
+</script>
+
+</body>
+</html>

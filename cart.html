@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <title>YUMBRIX - Checkout</title>
+   <link rel="icon" href="images/logo/ChatGPT Image Jun 20, 2025, 07_36_36 AM.png" type="image/png" />
+  <link rel="stylesheet" href="styles/cart.css" />
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KZ83TELRVB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KZ83TELRVB');
+</script>
+</head>
+<body>
+   <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <p>FREE SHIPPING OVER $75 USD & EASY RETURNS.</p>
+  </div>
+
+  <!-- Header / Nav -->
+  <header id="main-header">
+    <div class="nav-container">
+      <div class="menu-icon" id="menu-toggle">&#9776;</div>
+      <div class="logo">YUMBRIX</div>
+      <div class="header-icons">
+        <button id="search-icon">🔍</button>
+        <a href="cart.html">🛒</a>
+      </div>
+    </div>
+    <nav id="mobile-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Shop</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#deals">Deals</a></li>
+        <li><a href="login.html">Admin Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+<div id="search-bar" class="search-bar">
+  <button id="search-close" class="close-btn">&times;</button>
+  <div class="search-content">
+    <input type="text" id="search-input" placeholder="Search products...">
+    <button id="search-submit" class="search-submit">Search</button>
+  </div>
+</div>
+  <main class="cart-container">
+    <section class="cart-items-section" id="cart-items-section">
+      <h2>Your Cart</h2>
+      <div id="cart-items-list" class="cart-items-list"></div>
+      <div class="cart-total">
+        <h3>Total: $<span id="cart-total">0.00</span></h3>
+      </div>
+      <div class="suggestions">
+        <h3>You might also like</h3>
+        <div id="suggestions-list" class="suggestions-list"></div>
+      </div>
+    </section>
+
+    <section class="checkout-section">
+      <h2>Checkout</h2>
+      <div class="express-checkout">
+        <button>Pay with PayPal</button>
+        <button>CashApp</button>
+        <button>Amazon Pay</button>
+      </div>
+
+      <div class="or-divider">OR</div>
+
+      <form id="checkout-form">
+        <h3>Contact Info</h3>
+        <input type="email" placeholder="Email" required />
+        <label><input type="checkbox" /> Email me with news and offers</label>
+
+        <h3>Delivery</h3>
+       <select>
+  <option value="">Select Country</option>
+  <option value="af">Afghanistan</option>
+  <option value="al">Albania</option>
+  <option value="dz">Algeria</option>
+  <option value="ad">Andorra</option>
+  <option value="ao">Angola</option>
+  <option value="ag">Antigua and Barbuda</option>
+  <option value="ar">Argentina</option>
+  <option value="am">Armenia</option>
+  <option value="au">Australia</option>
+  <option value="at">Austria</option>
+  <option value="az">Azerbaijan</option>
+  <option value="bs">Bahamas</option>
+  <option value="bh">Bahrain</option>
+  <option value="bd">Bangladesh</option>
+  <option value="bb">Barbados</option>
+  <option value="by">Belarus</option>
+  <option value="be">Belgium</option>
+  <option value="bz">Belize</option>
+  <option value="bj">Benin</option>
+  <option value="bt">Bhutan</option>
+  <option value="bo">Bolivia</option>
+  <option value="ba">Bosnia and Herzegovina</option>
+  <option value="bw">Botswana</option>
+  <option value="br">Brazil</option>
+  <option value="bn">Brunei</option>
+  <option value="bg">Bulgaria</option>
+  <option value="bf">Burkina Faso</option>
+  <option value="bi">Burundi</option>
+  <option value="cv">Cabo Verde</option>
+  <option value="kh">Cambodia</option>
+  <option value="cm">Cameroon</option>
+  <option value="ca">Canada</option>
+  <option value="cf">Central African Republic</option>
+  <option value="td">Chad</option>
+  <option value="cl">Chile</option>
+  <option value="cn">China</option>
+  <option value="co">Colombia</option>
+  <option value="km">Comoros</option>
+  <option value="cd">Congo (DRC)</option>
+  <option value="cg">Congo (Republic)</option>
+  <option value="cr">Costa Rica</option>
+  <option value="hr">Croatia</option>
+  <option value="cu">Cuba</option>
+  <option value="cy">Cyprus</option>
+  <option value="cz">Czech Republic</option>
+  <option value="dk">Denmark</option>
+  <option value="dj">Djibouti</option>
+  <option value="dm">Dominica</option>
+  <option value="do">Dominican Republic</option>
+  <option value="ec">Ecuador</option>
+  <option value="eg">Egypt</option>
+  <option value="sv">El Salvador</option>
+  <option value="gq">Equatorial Guinea</option>
+  <option value="er">Eritrea</option>
+  <option value="ee">Estonia</option>
+  <option value="sz">Eswatini</option>
+  <option value="et">Ethiopia</option>
+  <option value="fj">Fiji</option>
+  <option value="fi">Finland</option>
+  <option value="fr">France</option>
+  <option value="ga">Gabon</option>
+  <option value="gm">Gambia</option>
+  <option value="ge">Georgia</option>
+  <option value="de">Germany</option>
+  <option value="gh">Ghana</option>
+  <option value="gr">Greece</option>
+  <option value="gd">Grenada</option>
+  <option value="gt">Guatemala</option>
+  <option value="gn">Guinea</option>
+  <option value="gw">Guinea-Bissau</option>
+  <option value="gy">Guyana</option>
+  <option value="ht">Haiti</option>
+  <option value="hn">Honduras</option>
+  <option value="hu">Hungary</option>
+  <option value="is">Iceland</option>
+  <option value="in">India</option>
+  <option value="id">Indonesia</option>
+  <option value="ir">Iran</option>
+  <option value="iq">Iraq</option>
+  <option value="ie">Ireland</option>
+  <option value="il">Israel</option>
+  <option value="it">Italy</option>
+  <option value="jm">Jamaica</option>
+  <option value="jp">Japan</option>
+  <option value="jo">Jordan</option>
+  <option value="kz">Kazakhstan</option>
+  <option value="ke">Kenya</option>
+  <option value="ki">Kiribati</option>
+  <option value="kr">Korea (South)</option>
+  <option value="kw">Kuwait</option>
+  <option value="kg">Kyrgyzstan</option>
+  <option value="la">Laos</option>
+  <option value="lv">Latvia</option>
+  <option value="lb">Lebanon</option>
+  <option value="ls">Lesotho</option>
+  <option value="lr">Liberia</option>
+  <option value="ly">Libya</option>
+  <option value="li">Liechtenstein</option>
+  <option value="lt">Lithuania</option>
+  <option value="lu">Luxembourg</option>
+  <option value="mg">Madagascar</option>
+  <option value="mw">Malawi</option>
+  <option value="my">Malaysia</option>
+  <option value="mv">Maldives</option>
+  <option value="ml">Mali</option>
+  <option value="mt">Malta</option>
+  <option value="mh">Marshall Islands</option>
+  <option value="mr">Mauritania</option>
+  <option value="mu">Mauritius</option>
+  <option value="mx">Mexico</option>
+  <option value="md">Moldova</option>
+  <option value="mc">Monaco</option>
+  <option value="mn">Mongolia</option>
+  <option value="me">Montenegro</option>
+  <option value="ma">Morocco</option>
+  <option value="mz">Mozambique</option>
+  <option value="mm">Myanmar</option>
+  <option value="na">Namibia</option>
+  <option value="nr">Nauru</option>
+  <option value="np">Nepal</option>
+  <option value="nl">Netherlands</option>
+  <option value="nz">New Zealand</option>
+  <option value="ni">Nicaragua</option>
+  <option value="ne">Niger</option>
+  <option value="ng">Nigeria</option>
+  <option value="mk">North Macedonia</option>
+  <option value="no">Norway</option>
+  <option value="om">Oman</option>
+  <option value="pk">Pakistan</option>
+  <option value="pw">Palau</option>
+  <option value="pa">Panama</option>
+  <option value="pg">Papua New Guinea</option>
+  <option value="py">Paraguay</option>
+  <option value="pe">Peru</option>
+  <option value="ph">Philippines</option>
+  <option value="pl">Poland</option>
+  <option value="pt">Portugal</option>
+  <option value="qa">Qatar</option>
+  <option value="ro">Romania</option>
+  <option value="ru">Russia</option>
+  <option value="rw">Rwanda</option>
+  <option value="kn">Saint Kitts and Nevis</option>
+  <option value="lc">Saint Lucia</option>
+  <option value="vc">Saint Vincent and the Grenadines</option>
+  <option value="ws">Samoa</option>
+  <option value="sm">San Marino</option>
+  <option value="st">Sao Tome and Principe</option>
+  <option value="sa">Saudi Arabia</option>
+  <option value="sn">Senegal</option>
+  <option value="rs">Serbia</option>
+  <option value="sc">Seychelles</option>
+  <option value="sl">Sierra Leone</option>
+  <option value="sg">Singapore</option>
+  <option value="sk">Slovakia</option>
+  <option value="si">Slovenia</option>
+  <option value="sb">Solomon Islands</option>
+  <option value="so">Somalia</option>
+  <option value="za">South Africa</option>
+  <option value="ss">South Sudan</option>
+  <option value="es">Spain</option>
+  <option value="lk">Sri Lanka</option>
+  <option value="sd">Sudan</option>
+  <option value="sr">Suriname</option>
+  <option value="se">Sweden</option>
+  <option value="ch">Switzerland</option>
+  <option value="sy">Syria</option>
+  <option value="tw">Taiwan</option>
+  <option value="tj">Tajikistan</option>
+  <option value="tz">Tanzania</option>
+  <option value="th">Thailand</option>
+  <option value="tl">Timor-Leste</option>
+  <option value="tg">Togo</option>
+  <option value="to">Tonga</option>
+  <option value="tt">Trinidad and Tobago</option>
+  <option value="tn">Tunisia</option>
+  <option value="tr">Turkey</option>
+  <option value="tm">Turkmenistan</option>
+  <option value="tv">Tuvalu</option>
+  <option value="ug">Uganda</option>
+  <option value="ua">Ukraine</option>
+  <option value="ae">United Arab Emirates</option>
+  <option value="gb">United Kingdom</option>
+  <option value="us">United States</option>
+  <option value="uy">Uruguay</option>
+  <option value="uz">Uzbekistan</option>
+  <option value="vu">Vanuatu</option>
+  <option value="ve">Venezuela</option>
+  <option value="vn">Vietnam</option>
+  <option value="ye">Yemen</option>
+  <option value="zm">Zambia</option>
+  <option value="zw">Zimbabwe</option>
+</select>
+
+        <input type="text" placeholder="First Name" required />
+        <input type="text" placeholder="Last Name" required />
+        <input type="text" placeholder="Company (optional)" />
+        <input type="text" placeholder="Address" required />
+        <input type="text" placeholder="Apartment, suite, etc. (optional)" />
+        <input type="text" placeholder="City" required />
+        <input type="text" placeholder="ZIP code" required />
+
+        <h3>Payment</h3>
+        <p>All transactions are secure and encrypted.</p>
+        <input type="text" placeholder="Name on Card" required />
+        <input type="text" placeholder="Card Number" required />
+        <input type="text" placeholder="Expiry Date (MM/YY)" required />
+        <input type="text" placeholder="Security Code" required />
+        <label><input type="checkbox" checked /> Use shipping address as billing address</label>
+
+        <h4>Alternative Payments</h4>
+        <button type="button">PayPal</button>
+        <button type="button">Afterpay</button>
+        <button type="button">CashApp</button>
+
+        <input type="tel" placeholder="Mobile Phone Number" />
+        <label><input type="checkbox" /> Remember me</label>
+
+        <button type="submit" class="pay-btn">Pay Now</button>
+        <p class="terms-note">
+          Your info will be saved to a Shop account. By continuing, you agree to Shop’s Terms of Service and acknowledge the Privacy Policy.
+        </p>
+      </form>
+    </section>
+  </main>
+ <!-- Tawk.to Script -->
+  <script type="text/javascript">
+  var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+  (function () {
+    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/685978bd526d7f1916c53d0e/1iuenv9a5';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+  })();
+  </script>
+  <script>
+  const searchIcon = document.getElementById("search-icon");
+  const searchBar = document.getElementById("search-bar");
+  const closeBtn = document.getElementById("search-close");
+
+  searchIcon.onclick = () => {
+    searchBar.classList.toggle("active");
+  };
+
+  closeBtn.onclick = () => {
+    searchBar.classList.remove("active");
+  };
+
+  // Handle search submit
+  document.getElementById("search-submit").onclick = () => {
+    const input = document.getElementById("search-input").value.toLowerCase().trim();
+
+    const keywordMap = {
+      "shoe": "fashion", "shoes": "fashion", "t-shirt": "fashion", "shirt": "fashion", "bag": "fashion", "bags": "fashion", "fashion": "fashion",
+      "phone": "electronics", "phones": "electronics", "headset": "electronics", "watch": "electronics", "smartwatch": "electronics", "electronics": "electronics",
+      "skincare": "beauty", "body spray": "beauty", "beauty": "beauty", "health": "beauty", "wellness": "beauty"
+    };
+
+    let matched = null;
+    for (let keyword in keywordMap) {
+      if (input.includes(keyword)) {
+        matched = keywordMap[keyword];
+        break;
+      }
+    }
+
+    if (matched) {
+      const target = document.querySelector(`[data-category="${matched}"]`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        searchBar.classList.remove("active");
+      } else {
+        alert("Match found, but section not present.");
+      }
+    } else {
+      alert("No results found.");
+    }
+  };
+</script>
+<!-- Firebase SDK & Newsletter Integration -->
+<script type="module">
+  // Import Firebase modules
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // Your Firebase config (copied correctly)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAbHDp4L93KFi8Ed4-_jGGEqrhAzH9wJSU",
+    authDomain: "yumbrix-9b564.firebaseapp.com",
+    projectId: "yumbrix-9b564",
+    storageBucket: "yumbrix-9b564.firebasestorage.app",
+    messagingSenderId: "912384112432",
+    appId: "1:912384112432:web:c0074c233e1dc35f52faf5",
+    measurementId: "G-Q2V45TL4LP"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Handle form submission
+  const form = document.querySelector('.newsletter-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = form.querySelector('input').value;
+
+    try {
+      await addDoc(collection(db, "newsletterEmails"), {
+        email: email,
+        timestamp: serverTimestamp()
+      });
+
+      // Show success toast
+      document.getElementById("toast").classList.add("show");
+      setTimeout(() => {
+        document.getElementById("toast").classList.remove("show");
+      }, 4000);
+
+      form.reset();
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+      console.error("Firebase error:", error);
+    }
+  });
+  // Extra: Handle email from popup
+document.getElementById("popup-submit").addEventListener("click", async () => {
+  const email = document.getElementById("popup-email").value;
+  if (!email) return alert("Please enter your email.");
+
+  try {
+    await addDoc(collection(db, "newsletterEmails"), {
+      email: email,
+      timestamp: serverTimestamp()
+    });
+
+    // Optionally hide the popup and show toast
+    document.getElementById("popup-overlay").style.display = "none";
+    document.getElementById("toast").innerText = "🎉 You're in! Welcome to YUMBRIX.";
+    document.getElementById("toast").classList.add("show");
+    setTimeout(() => {
+      document.getElementById("toast").classList.remove("show");
+    }, 4000);
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong. Try again.");
+  }
+});
+</script>
+  <script src="script/cart.js"></script>
+</body>
+</html>

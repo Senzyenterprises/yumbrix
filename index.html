@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YUMBRIX - Global Store</title>
+  <link rel="icon" href="images/logo/ChatGPT Image Jun 20, 2025, 07_36_36 AM.png" type="image/png" />
+  <link rel="stylesheet" href="styles/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KZ83TELRVB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KZ83TELRVB');
+</script>
+</head>
+<body>
+  <div class="page-wrapper">
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <p>FREE SHIPPING OVER $75 USD & EASY RETURNS.</p>
+  </div>
+
+  <!-- Header / Nav -->
+  <header id="main-header">
+    <div class="nav-container">
+      <div class="menu-icon" id="menu-toggle">&#9776;</div>
+      <div class="logo">YUMBRIX</div>
+      <div class="header-icons">
+        <button id="search-icon">🔍</button>
+        <a href="cart.html">🛒</a>
+      </div>
+    </div>
+    <nav id="mobile-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Shop</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#deals">Deals</a></li>
+        <li><a href="login.html">Admin Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+<div id="search-bar" class="search-bar">
+  <button id="search-close" class="close-btn">&times;</button>
+  <div class="search-content">
+    <input type="text" id="search-input" placeholder="Search products...">
+    <button id="search-submit" class="search-submit">Search</button>
+  </div>
+</div>
+
+  <!-- Hero Slider -->
+  <section class="hero-slider">
+    <div class="slide active" style="background-image: url('images/pictures/pexels-bohlemedia-1884584\ \(1\).jpg');">
+      <div class="slide-content">
+        <h1>Global Deals, Local Prices</h1>
+        <p>Shop your favorites with ease and confidence.</p>
+      </div>
+    </div>
+    <div class="slide" style="background-image: url('images/pictures/pexels-jakubzerdzicki-32583519\ \(1\).jpg');">
+      <div class="slide-content">
+        <h1>Style & Tech Delivered</h1>
+        <p>From gadgets to fashion, we’ve got you.</p> 
+      </div>
+    </div>
+    <div class="slide" style="background-image: url('images/pictures/pexels-mikhail-nilov-6707559\ \(1\).jpg');">
+      <div class="slide-content">
+        <h1>Enjoy Seamless Shopping</h1>
+        <p>Fast, secure checkout with Yumbrix.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Email Popup -->
+  <div id="popup-overlay">
+    <div id="email-popup">
+      <h2>Join YUMBRIX!</h2>
+      <p>Get deals, product updates, and more.</p>
+      <input type="email" id="popup-email" placeholder="Enter your email" />
+      <div class="popup-actions">
+        <button id="interested-btn">I'm Interested</button>
+        <button id="not-interested-btn">Not Interested</button>
+        <button id="close-popup">&times;</button>
+      </div>
+    </div>
+  </div>
+
+<!-- ========== Featured Categories ========== -->
+<section id="categories" class="featured-categories">
+  <div class="category-card" data-category="beauty">
+    <div class="category-slider" id="beauty-slider">
+      <img src="images/pictures/pexels-828860-2586073 (1).jpg" alt="Skincare">
+      <img src="images/pictures/pexels-polina-kovaleva-8101532 (1).jpg" alt="Body Spray">
+      <img src="images/pictures/pexels-karolina-grabowska-4202325 (1).jpg" alt="Wellness">
+    </div>
+    <div class="category-label">Beauty & Health</div>
+  </div>
+
+  <div class="category-card" data-category="fashion">
+    <div class="category-slider" id="fashion-slider">
+      <img src="images/pictures/pexels-kaip-996329 (1).jpg" alt="T-shirts">
+      <img src="images/pictures/pexels-melvin-buezo-1253763-2529148 (1).jpg" alt="Shoes">
+      <img src="images/pictures/pexels-flat-hito-294826-904350.jpg" alt="Bags">
+    </div>
+    <div class="category-label">Fashion</div>
+  </div>
+
+  <div class="category-card" data-category="electronics">
+    <div class="category-slider" id="electronics-slider">
+      <img src="images/pictures/pexels-pixabay-207589 (1).jpg" alt="Phones">
+      <img src="images/pictures/pexels-sound-on-3394650 (1).jpg" alt="Headsets">
+      <img src="images/pictures/pexels-olenkabohovyk-3646165 (1).jpg" alt="Smartwatches">
+    </div>
+    <div class="category-label">Electronics</div>
+  </div>
+</section>
+<!-- ========== Shop Preview Section ========== -->
+<section class="shop-preview">
+  <h2 class="section-heading">🛍 Shop Our Picks</h2>
+
+  <!-- First Row -->
+  <div class="shop-row">
+    <div class="card tall">
+      <img src="images/pictures/pexels-yankrukov-7011416 (1).jpg" alt="">
+      <div class="info">
+        <h3>Glow Serum</h3>
+        <p>$18.00</p>
+      </div>
+    </div>
+    <div class="stacked">
+      <div class="card short">
+        <img src="images/pictures/pexels-itay-verchik-1150587-16771847 (1).jpg" alt="">
+        <div class="info">
+          <h3>Casual Tee</h3>
+          <p>$25.00</p>
+        </div>
+      </div>
+      <div class="card short">
+        <img src="images/pictures/pexels-lazarus-ziridis-351891426-32642010 (1).jpg" alt="">
+        <div class="info">
+          <h3>Crossbody Bag</h3>
+          <p>$32.00</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Second Row -->
+<div class="shop-row reverse">
+  <div class="stacked">
+    <div class="card short">
+      <img src="images/pictures/pexels-le-mai-anh-3362559-9759620 (1).jpg" alt="">
+      <div class="info">
+        <h3>Body Mist</h3>
+        <p>$15.00</p>
+      </div>
+    </div>
+    <div class="card short">
+      <img src="images/pictures/pexels-sound-on-3394650 (1).jpg" alt="">
+      <div class="info">
+        <h3>Headset</h3>
+        <p>$49.00</p>
+      </div>
+    </div>
+  </div>
+  <div class="card tall">
+    <img src="images/pictures/pexels-karolina-grabowska-4041176 (1).jpg" alt="">
+    <div class="info">
+      <h3>Smartwatch</h3>
+      <p>$75.00</p>
+    </div>
+  </div>
+</div>
+
+<section id="deals" class="deals-section">
+  <h2 class="section-title">⏳ Limited-Time Deals</h2>
+  <div class="deals-container">
+
+    <div class="deal-card">
+      <div class="deal-image" style="background-image: url('images/pictures/pexels-n-voitkevich-8558492\ \(1\).jpg');"></div>
+      <div class="deal-content">
+        <h3>25% Off Skincare</h3>
+        <p>Glow better with top beauty picks.</p>
+        <span class="deal-tag">Ends in 2d 5h</span>
+      </div>
+    </div>
+
+    <div class="deal-card">
+      <div class="deal-image" style="background-image: url('images/pictures/pexels-skylar-kang-6046205\ \(1\).jpg');"></div>
+      <div class="deal-content">
+        <h3>Fashion Flash Sale</h3>
+        <p>Best looks under $50. Today only.</p>
+        <span class="deal-tag">Today Only</span>
+      </div>
+    </div>
+
+    <div class="deal-card">
+      <div class="deal-image" style="background-image: url('images/pictures/pexels-karolina-grabowska-4041176\ \(1\).jpg');"></div>
+      <div class="deal-content">
+        <h3>Smartwatch Bundle</h3>
+        <p>Buy 1, get 1 free – this week only.</p>
+        <span class="deal-tag">🔥 Hot Deal</span>
+      </div>
+    </div>
+  </div>
+  <!-- ========== Promo Banner Row ========== -->
+<section class="promo-scroll-wrapper">
+  <div class="promo-banner">
+    <!-- Promo Items (first set) -->
+    <div class="promo-item">
+      <i class="fas fa-shipping-fast"></i>
+      <p>Free Shipping</p>
+    </div>
+    <div class="promo-item">
+      <i class="fas fa-lock"></i>
+      <p>Secure Payment</p>
+    </div>
+    <div class="promo-item">
+      <i class="fas fa-headset"></i>
+      <p>24/7 Support</p>
+    </div>
+    <div class="promo-item">
+      <i class="fas fa-tags"></i>
+      <p>Best Deals</p>
+    </div>
+    <div class="promo-item">
+      <i class="fas fa-undo"></i>
+      <p>Easy Returns</p>
+    </div>
+
+    <!-- Promo Items (duplicate set for seamless loop) -->
+    <div class="promo-item">
+      <i class="fas fa-shipping-fast"></i>
+      <p>Free Shipping</p>
+    </div>
+    <div class="promo-item">
+      <i class="fas fa-lock"></i>
+      <p>Secure Payment</p>
+    </div>
+    <div class="promo-item">
+      <i class="fas fa-headset"></i>
+      <p>24/7 Support</p>
+    </div>
+    <div class="promo-item">
+      <i class="fas fa-tags"></i>
+      <p>Best Deals</p>
+    </div>
+    <div class="promo-item">
+      <i class="fas fa-undo"></i>
+      <p>Easy Returns</p>
+    </div>
+  </div>
+</section>
+<section class="testimonials-section">
+  <h2 class="testimonial-section-heading">What Customers Are Saying</h2>
+  <div class="testimonial-wrapper">
+    <button id="prevTestimonial">&#10094;</button>
+    <div class="testimonial-carousel" id="testimonial-carousel">
+      <div class="testimonial">"Absolutely love the products!"<br>– Adaeze N.</div>
+      <div class="testimonial">"Fast delivery and excellent customer service."<br>– Chinedu A.</div>
+      <div class="testimonial">"The quality is top-notch, I’ll definitely be back."<br>– Fatima B.</div>
+      <div class="testimonial">"Smooth shopping experience. Highly recommend."<br>– Kelvin M.</div>
+      <div class="testimonial">"The promo deals saved me so much!"<br>– Ijeoma E.</div>
+      <div class="testimonial">"Beautiful packaging and timely delivery."<br>– Segun O.</div>
+      <div class="testimonial">"Everything arrived as described, perfect!"<br>– Amaka U.</div>
+      <div class="testimonial">"Great prices and top brands."<br>– David Okafor</div>
+    </div>
+    <button id="nextTestimonial">&#10095;</button>
+  </div>
+</section>
+</section>
+<!-- ========== Brands We Carry ========== -->
+<section class="brands-we-carry">
+  <h2 class="section-heading">Brands We Carry</h2>
+  <div class="brand-logos">
+    <div class="brand-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike"></div>
+    <div class="brand-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung"></div>
+    <div class="brand-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple"></div>
+    <div class="brand-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas"></div>
+  </div>
+</section>
+<section class="newsletter-signup">
+  <div class="newsletter-container">
+    <h2>Want First Dibs?</h2>
+    <p>Join our email list and be the first to know about new limited edition products, material innovations, and lots of other fun updates.</p>
+    
+    <form class="newsletter-form">
+      <input type="email" placeholder="Enter your email address" required>
+      <button type="submit">Sign Up</button>
+    </form>
+    
+    <small>You can opt-out at any time. See our <a href="#">Privacy Policy</a> and <a href="#">Terms</a>.</small>
+  </div>
+</section>
+<div id="toast">🎉 Thanks! You’ve been signed up.</div>
+
+<!-- ========== Cookie Consent ========== -->
+<div id="cookie-banner" class="cookie-banner">
+  <p>
+    <strong>But first, cookies 🍪</strong><br>
+    We use essential cookies to make YUMBRIX work. We'd like to use other cookies to improve and personalize your visit, tailor ads you see from us on YUMBRIX and partner sites, and to analyze our website's performance, but only if you accept. 
+    <a href="privacy.html" target="_blank">Learn more</a> about your choices in our <a href="cookie-policy.html" target="_blank">cookie policy</a>.
+  </p>
+  <div class="cookie-buttons">
+    <button id="accept-cookies">Accept</button>
+    <button id="decline-cookies">Decline</button>
+  </div>
+</div>
+<!-- ========== Footer ========== -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h2>YUMBRIX</h2>
+      <p>Global deals, local comfort. Your go-to for beauty, fashion, and electronics.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="shop.html">Shop All</a></li>
+        <li><a href="#beauty">Beauty & Health</a></li>
+        <li><a href="#fashion">Fashion</a></li>
+        <li><a href="#electronics">Electronics</a></li>
+        <li><a href="deals.html">Deals</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-support">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping Info</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-social">
+      <h4>Connect</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/234XXXXXXXXX"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 YUMBRIX. All rights reserved.</p>
+  </div>
+</footer>
+</div>
+  <!-- Tawk.to Script -->
+  <script type="text/javascript">
+  var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+  (function () {
+    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/685978bd526d7f1916c53d0e/1iuenv9a5';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+  })();
+  </script>
+<script>
+const carousel = document.getElementById("testimonial-carousel");
+const testimonials = document.querySelectorAll(".testimonial");
+const prevBtn = document.getElementById("prevTestimonial");
+const nextBtn = document.getElementById("nextTestimonial");
+
+let currentIndex = 0;
+
+function getPerView() {
+  return window.innerWidth < 768 ? 2 : 4;
+}
+
+function getMaxIndex() {
+  return Math.ceil(testimonials.length / getPerView()) - 1;
+}
+
+function updateCarousel() {
+  const perView = getPerView();
+  const shift = (100 / perView) * currentIndex;
+  carousel.style.transform = `translateX(-${shift}%)`;
+}
+
+nextBtn.onclick = () => {
+  currentIndex = (currentIndex >= getMaxIndex()) ? 0 : currentIndex + 1;
+  updateCarousel();
+};
+
+prevBtn.onclick = () => {
+  currentIndex = (currentIndex <= 0) ? getMaxIndex() : currentIndex - 1;
+  updateCarousel();
+};
+
+setInterval(() => {
+  currentIndex = (currentIndex >= getMaxIndex()) ? 0 : currentIndex + 1;
+  updateCarousel();
+}, 5000);
+
+window.addEventListener("resize", () => {
+  currentIndex = 0;
+  updateCarousel();
+});
+</script>
+
+<script>
+  const searchIcon = document.getElementById("search-icon");
+  const searchBar = document.getElementById("search-bar");
+  const closeBtn = document.getElementById("search-close");
+
+  searchIcon.onclick = () => {
+    searchBar.classList.toggle("active");
+  };
+
+  closeBtn.onclick = () => {
+    searchBar.classList.remove("active");
+  };
+
+  // Handle search submit
+  document.getElementById("search-submit").onclick = () => {
+    const input = document.getElementById("search-input").value.toLowerCase().trim();
+
+    const keywordMap = {
+      "shoe": "fashion", "shoes": "fashion", "t-shirt": "fashion", "shirt": "fashion", "bag": "fashion", "bags": "fashion", "fashion": "fashion",
+      "phone": "electronics", "phones": "electronics", "headset": "electronics", "watch": "electronics", "smartwatch": "electronics", "electronics": "electronics",
+      "skincare": "beauty", "body spray": "beauty", "beauty": "beauty", "health": "beauty", "wellness": "beauty"
+    };
+
+    let matched = null;
+    for (let keyword in keywordMap) {
+      if (input.includes(keyword)) {
+        matched = keywordMap[keyword];
+        break;
+      }
+    }
+
+    if (matched) {
+      const target = document.querySelector(`[data-category="${matched}"]`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        searchBar.classList.remove("active");
+      } else {
+        alert("Match found, but section not present.");
+      }
+    } else {
+      alert("No results found.");
+    }
+  };
+</script>
+<!-- Firebase SDK & Newsletter Integration -->
+<script type="module">
+  // Import Firebase modules
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // Your Firebase config (copied correctly)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAbHDp4L93KFi8Ed4-_jGGEqrhAzH9wJSU",
+    authDomain: "yumbrix-9b564.firebaseapp.com",
+    projectId: "yumbrix-9b564",
+    storageBucket: "yumbrix-9b564.firebasestorage.app",
+    messagingSenderId: "912384112432",
+    appId: "1:912384112432:web:c0074c233e1dc35f52faf5",
+    measurementId: "G-Q2V45TL4LP"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Handle form submission
+  const form = document.querySelector('.newsletter-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = form.querySelector('input').value;
+
+    try {
+      await addDoc(collection(db, "newsletterEmails"), {
+        email: email,
+        timestamp: serverTimestamp()
+      });
+
+      // Show success toast
+      document.getElementById("toast").classList.add("show");
+      setTimeout(() => {
+        document.getElementById("toast").classList.remove("show");
+      }, 4000);
+
+      form.reset();
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+      console.error("Firebase error:", error);
+    }
+  });
+  // Extra: Handle email from popup
+document.getElementById("popup-submit").addEventListener("click", async () => {
+  const email = document.getElementById("popup-email").value;
+  if (!email) return alert("Please enter your email.");
+
+  try {
+    await addDoc(collection(db, "newsletterEmails"), {
+      email: email,
+      timestamp: serverTimestamp()
+    });
+
+    // Optionally hide the popup and show toast
+    document.getElementById("popup-overlay").style.display = "none";
+    document.getElementById("toast").innerText = "🎉 You're in! Welcome to YUMBRIX.";
+    document.getElementById("toast").classList.add("show");
+    setTimeout(() => {
+      document.getElementById("toast").classList.remove("show");
+    }, 4000);
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong. Try again.");
+  }
+});
+</script>
+
+  <script src="script/index.js"></script>
+</body>
+</html>

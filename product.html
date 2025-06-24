@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YUMBRIX - Product Page</title>
+   <link rel="icon" href="images/logo/ChatGPT Image Jun 20, 2025, 07_36_36 AM.png" type="image/png" />
+  <link rel="stylesheet" href="styles/product.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KZ83TELRVB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KZ83TELRVB');
+</script>
+</head>
+<body>
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <p>FREE SHIPPING OVER $75 USD & EASY RETURNS.</p>
+  </div>
+
+  <!-- Header / Nav -->
+  <header id="main-header">
+    <div class="nav-container">
+      <div class="menu-icon" id="menu-toggle">&#9776;</div>
+      <div class="logo">YUMBRIX</div>
+      <div class="header-icons">
+        <button id="search-icon">🔍</button>
+        <a onclick="goToCart()">
+    🛒<span id="cart-count" class="cart-count">0</span></a>
+      </div>
+    </div>
+    <nav id="mobile-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Shop</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#deals">Deals</a></li>
+        <li><a href="login.html">Admin Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+<div id="search-bar" class="search-bar">
+  <button id="search-close" class="close-btn">&times;</button>
+  <div class="search-content">
+    <input type="text" id="search-input" placeholder="Search products...">
+    <button id="search-submit" class="search-submit">Search</button>
+  </div>
+</div>
+  
+<!-- Slide-Out Cart Preview -->
+<div id="slide-cart" class="slide-cart">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button id="close-slide-cart" class="close-btn">×</button>
+  </div>
+  <div id="cart-items-preview" class="cart-items"></div>
+  <button id="checkout-btn" class="checkout-btn">Checkout</button>
+</div>
+
+  <!-- Fashion Section -->
+  <section class="category-section">
+    <h2>Fashion</h2>
+    <div class="product-grid" id="fashion-products">
+      <!-- Products will be injected by JS -->
+    </div>
+  </section>
+
+  <!-- Electronics Section -->
+  <section class="category-section">
+    <h2>Electronics</h2>
+    <div class="product-grid" id="electronics-products">
+      <!-- Products will be injected by JS -->
+    </div>
+  </section>
+
+  <!-- Beauty & Health Section -->
+  <section class="category-section">
+    <h2>Beauty & Health</h2>
+    <div class="product-grid" id="beauty-products">
+      <!-- Products will be injected by JS -->
+    </div>
+  </section>
+  <section class="newsletter-signup">
+  <div class="newsletter-container">
+    <h2>Want First Dibs?</h2>
+    <p>Join our email list and be the first to know about new limited edition products, material innovations, and lots of other fun updates.</p>
+    
+    <form class="newsletter-form">
+      <input type="email" placeholder="Enter your email address" required>
+      <button type="submit">Sign Up</button>
+    </form>
+    
+    <small>You can opt-out at any time. See our <a href="#">Privacy Policy</a> and <a href="#">Terms</a>.</small>
+  </div>
+</section>
+<div id="toast">🎉 Thanks! You’ve been signed up.</div>
+  <!-- ========== Footer ========== -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h2>YUMBRIX</h2>
+      <p>Global deals, local comfort. Your go-to for beauty, fashion, and electronics.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="shop.html">Shop All</a></li>
+        <li><a href="#beauty">Beauty & Health</a></li>
+        <li><a href="#fashion">Fashion</a></li>
+        <li><a href="#electronics">Electronics</a></li>
+        <li><a href="deals.html">Deals</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-support">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping Info</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-social">
+      <h4>Connect</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/234XXXXXXXXX"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 YUMBRIX. All rights reserved.</p>
+  </div>
+</footer>
+ <!-- Tawk.to Script -->
+  <script type="text/javascript">
+  var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+  (function () {
+    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/685978bd526d7f1916c53d0e/1iuenv9a5';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+  })();
+  </script>
+  <script>
+  const searchIcon = document.getElementById("search-icon");
+  const searchBar = document.getElementById("search-bar");
+  const closeBtn = document.getElementById("search-close");
+
+  searchIcon.onclick = () => {
+    searchBar.classList.toggle("active");
+  };
+
+  closeBtn.onclick = () => {
+    searchBar.classList.remove("active");
+  };
+
+  // Handle search submit
+  document.getElementById("search-submit").onclick = () => {
+    const input = document.getElementById("search-input").value.toLowerCase().trim();
+
+    const keywordMap = {
+      "shoe": "fashion", "shoes": "fashion", "t-shirt": "fashion", "shirt": "fashion", "bag": "fashion", "bags": "fashion", "fashion": "fashion",
+      "phone": "electronics", "phones": "electronics", "headset": "electronics", "watch": "electronics", "smartwatch": "electronics", "electronics": "electronics",
+      "skincare": "beauty", "body spray": "beauty", "beauty": "beauty", "health": "beauty", "wellness": "beauty"
+    };
+
+    let matched = null;
+    for (let keyword in keywordMap) {
+      if (input.includes(keyword)) {
+        matched = keywordMap[keyword];
+        break;
+      }
+    }
+
+    if (matched) {
+      const target = document.querySelector(`[data-category="${matched}"]`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        searchBar.classList.remove("active");
+      } else {
+        alert("Match found, but section not present.");
+      }
+    } else {
+      alert("No results found.");
+    }
+  };
+  </script>
+  <script src="script/product.js"></script>
+  <script>
+  let productData = JSON.parse(localStorage.getItem("allProductsData")); 
+</script>
+
+</body>
+</html>
