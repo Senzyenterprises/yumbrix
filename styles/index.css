@@ -806,6 +806,7 @@ body {
 .cookie-banner {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
   background: #2c2c2c;
   color: #fff;
@@ -826,13 +827,16 @@ body {
 
 .cookie-buttons {
   margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* handles smaller screens */
 }
 
 .cookie-buttons button {
   background: #fff;
   color: #000;
   padding: 8px 15px;
-  margin: 0 5px;
+  margin: 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
