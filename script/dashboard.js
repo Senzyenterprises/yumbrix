@@ -1,11 +1,29 @@
+// ✅ CLEANED dashboard.js — Fully working version with Firebase + localStorage fallback
+
 let isEditing = false;
 let editingCategory = null;
 let editingIndex = null;
 
 // =======================
+// FIREBASE CONFIG
+// =======================
+const firebaseConfig = {
+  apiKey: "AIzaSyAbHDp4L93KFi8Ed4-_jGGEqrhAzH9wJSU",
+  authDomain: "yumbrix-9b564.firebaseapp.com",
+  databaseURL: "https://yumbrix-9b564-default-rtdb.firebaseio.com",
+  projectId: "yumbrix-9b564",
+  storageBucket: "yumbrix-9b564.appspot.com",
+  messagingSenderId: "912384112432",
+  appId: "1:912384112432:web:c0074c233e1dc35f52faf5",
+  measurementId: "G-Q2V45TL4LP"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// =======================
 // DEFAULT PRODUCTS
 // =======================
-let defaultProducts = {
+const defaultProducts = {
   fashion: [
     { id: 1, name: "T-Shirt", price: 25, image: "images/pictures/pexels-itay-verchik-1150587-16771847 (1).jpg" },
     { id: 2, name: "Sneakers", price: 40, image: "images/pictures/pexels-melvin-buezo-1253763-2529148 (1).jpg" },
@@ -39,22 +57,6 @@ let defaultProducts = {
 };
 
 // =======================
-// LOGOUT + INACTIVITY HANDLER
-// =======================
-function logout() {
-  localStorage.removeItem("isYumbrixAdmin");
-  window.location.href = "login.html";
-}
-
-let inactivityTimer;
-function resetTimer() {
-  clearTimeout(inactivityTimer);
-  inactivityTimer = setTimeout(logout, 30 * 60 * 1000);
-}
-['click','mousemove','keypress','scroll'].forEach(evt => window.addEventListener(evt, resetTimer));
-resetTimer();
-
-// =======================
 // DOM ELEMENTS
 // =======================
 const form = document.getElementById("product-form");
@@ -65,69 +67,39 @@ const categorySelect = document.getElementById("product-category");
 const optionsWrapper = document.getElementById("options-wrapper");
 
 // =======================
-// CATEGORY CHANGE HANDLER
+// INACTIVITY LOGOUT
+// =======================
+function logout() {
+  localStorage.removeItem("isYumbrixAdmin");
+  window.location.href = "login.html";
+}
+let inactivityTimer;
+function resetTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(logout, 25 * 60 * 1000); // 25 minutes
+}
+["click", "mousemove", "keypress", "scroll"].forEach(evt => window.addEventListener(evt, resetTimer));
+resetTimer();
+
+// =======================
+// CATEGORY TOGGLE
 // =======================
 categorySelect.addEventListener("change", () => {
   optionsWrapper.style.display = categorySelect.value === "electronics" ? "block" : "none";
 });
 
 // =======================
-// ADD/EDIT PRODUCT HANDLER
+// LISTEN TO PRODUCTS (REALTIME)
 // =======================
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const cat = categorySelect.value;
-  const name = document.getElementById("product-name").value.trim();
-  const price = parseFloat(document.getElementById("product-price").value);
-  const imageInput = document.getElementById("product-image");
-  const imageFile = imageInput.files[0];
-
-  if (!imageFile) return alert("Please select an image!");
-
-  const optionsText = document.getElementById("product-options").value.trim();
-  const options = optionsText ? optionsText.split(",").map(opt => opt.trim()) : undefined;
-
-  const reader = new FileReader();
-  reader.onload = function (event) {
-    const image = event.target.result;
-    const data = JSON.parse(localStorage.getItem("productData")) || {};
-    if (!data[cat]) data[cat] = [];
-
-    if (isEditing) {
-      const updatedProduct = { id: Date.now(), name, price, image };
-      if (cat === "electronics" && options) updatedProduct.options = options;
-      data[editingCategory][editingIndex] = updatedProduct;
-
-      const allData = JSON.parse(localStorage.getItem("allProductsData")) || {};
-      if (allData[editingCategory]) {
-        allData[editingCategory][editingIndex] = updatedProduct;
-        localStorage.setItem("allProductsData", JSON.stringify(allData));
-      }
-
-      isEditing = false;
-      editingCategory = null;
-      editingIndex = null;
-      document.getElementById("edit-status").style.display = "none";
-    } else {
-      const newProduct = { id: Date.now(), name, price, image };
-      if (cat === "electronics" && options) newProduct.options = options;
-      data[cat].push(newProduct);
-      addProductToLocalStorage(cat, name, price, image, options);
-    }
-
+function listenToProducts() {
+  db.ref("products").on("value", snapshot => {
+    const data = snapshot.val() || {};
     localStorage.setItem("productData", JSON.stringify(data));
-    loadProducts();
-    form.reset();
-    optionsWrapper.style.display = "none";
-  };
-  reader.readAsDataURL(imageFile);
-});
-
-// =======================
-// LOAD PRODUCTS TO LIST
-// =======================
-function loadProducts() {
-  const data = JSON.parse(localStorage.getItem("productData")) || {};
+    renderProductList(data);
+    estimateStorageUsage(data); // ← add this line
+  });
+}
+function renderProductList(data) {
   listContainer.innerHTML = "";
   Object.keys(data).forEach(category => {
     data[category].forEach((product, index) => {
@@ -143,73 +115,159 @@ function loadProducts() {
 }
 
 // =======================
+// ADD/EDIT PRODUCT
+// =======================
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const cat = categorySelect.value;
+  const name = document.getElementById("product-name").value.trim();
+  const price = parseFloat(document.getElementById("product-price").value);
+  const imageInput = document.getElementById("product-image");
+  const imageFile = imageInput.files[0];
+  if (imageFile && imageFile.size > 1024 * 1024) { // 1MB
+  alert("Image is too large. Please compress it below 1MB.");
+  return;
+}
+  const optionsText = document.getElementById("product-options").value.trim();
+  const options = optionsText ? optionsText.split(",").map(opt => opt.trim()) : undefined;
+
+  db.ref("products/" + cat).once("value", (snap) => {
+    const existing = snap.val() || [];
+
+    const buildAndSaveProduct = (imageBase64) => {
+      let product = {
+        id: Date.now(),
+        name,
+        price,
+        image: imageBase64
+      };
+
+      if (cat === "electronics" && options) {
+        product.options = options;
+      }
+
+      if (isEditing) {
+        product.id = existing[editingIndex].id;
+        if (!imageBase64) {
+          product.image = existing[editingIndex].image;
+        }
+        existing[editingIndex] = product;
+        isEditing = false;
+        editingCategory = null;
+        editingIndex = null;
+        document.getElementById("edit-status").style.display = "none";
+      } else {
+        if (!imageBase64) {
+          alert("Please select an image when adding a new product.");
+          return;
+        }
+        existing.push(product);
+      }
+
+      db.ref("products/" + cat).set(existing, () => {
+        form.reset();
+        optionsWrapper.style.display = "none";
+      });
+    };
+
+    if (isEditing && !imageFile) {
+      buildAndSaveProduct(null);
+    } else if (imageFile) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        buildAndSaveProduct(e.target.result);
+      };
+      reader.readAsDataURL(imageFile);
+    } else {
+      alert("Please select an image!");
+    }
+  });
+});
+
+// =======================
 // EDIT PRODUCT
 // =======================
-function editProduct(category, index) {
-  const data = JSON.parse(localStorage.getItem("productData"));
-  const p = data[category][index];
-  document.getElementById("edit-status").style.display = "block";
-  document.getElementById("product-category").value = category;
-  document.getElementById("product-name").value = p.name;
-  document.getElementById("product-price").value = p.price;
-  categorySelect.dispatchEvent(new Event("change"));
-  if (category === "electronics" && p.options) {
-    document.getElementById("product-options").value = p.options.join(", ");
-  } else {
-    document.getElementById("product-options").value = "";
-  }
-  form.scrollIntoView({ behavior: "smooth" });
-  isEditing = true;
-  editingCategory = category;
-  editingIndex = index;
-}
+window.editProduct = function (category, index) {
+  db.ref(`products/${category}`).once("value", snap => {
+    const p = snap.val()[index];
+    document.getElementById("edit-status").style.display = "block";
+    document.getElementById("product-category").value = category;
+    document.getElementById("product-name").value = p.name;
+    document.getElementById("product-price").value = p.price;
+    categorySelect.dispatchEvent(new Event("change"));
+    document.getElementById("product-options").value = p.options ? p.options.join(", ") : "";
+    isEditing = true;
+    editingCategory = category;
+    editingIndex = index;
+    form.scrollIntoView({ behavior: "smooth" });
+  });
+};
 
 // =======================
 // DELETE PRODUCT
 // =======================
-function deleteProduct(category, index) {
-  const data = JSON.parse(localStorage.getItem("productData"));
-  const deletedProduct = data[category][index];
-  data[category].splice(index, 1);
-  localStorage.setItem("productData", JSON.stringify(data));
-
-  let allData = JSON.parse(localStorage.getItem("allProductsData")) || {};
-  if (allData[category]) {
-    allData[category] = allData[category].filter(p => p.id !== deletedProduct.id);
-    localStorage.setItem("allProductsData", JSON.stringify(allData));
-  }
-  loadProducts();
-}
+window.deleteProduct = function (category, index) {
+  db.ref(`products/${category}`).once("value", snap => {
+    const products = snap.val();
+    products.splice(index, 1);
+    db.ref(`products/${category}`).set(products);
+  });
+};
 
 // =======================
-// RESET PRODUCTS TO DEFAULT
+// RESET TO DEFAULT
 // =======================
 resetBtn.addEventListener("click", () => {
   if (confirm("Are you sure you want to reset to default products?")) {
-    localStorage.setItem("productData", JSON.stringify(defaultProducts));
-    localStorage.setItem("allProductsData", JSON.stringify(defaultProducts));
-    status.textContent = "✅ Reset successful.";
-    loadProducts();
-    setTimeout(() => status.textContent = "", 2000);
+    db.ref("products").set(defaultProducts, () => {
+      localStorage.setItem("productData", JSON.stringify(defaultProducts));
+      status.textContent = "✅ Reset successful.";
+      setTimeout(() => status.textContent = "", 2000);
+    });
   }
 });
 
 // =======================
-// INIT PRODUCT LOAD
+// INIT
 // =======================
-loadProducts();
+  listenToProducts();
 
-// =======================
-// SYNC TO allProductsData
-// =======================
-function addProductToLocalStorage(category, name, price, image, options = undefined) {
-  const data = JSON.parse(localStorage.getItem("allProductsData")) || {
-    fashion: [], electronics: [], beauty: []
-  };
+// ==================================================
+//  ESTIMATE STORAGE SPACE
+/* When products are loaded, the script checks how much space is used.
 
-  const newProduct = { id: Date.now(), name, price: parseFloat(price), image };
-  if (category === "electronics" && options) newProduct.options = options;
-  if (!data[category]) data[category] = [];
-  data[category].push(newProduct);
-  localStorage.setItem("allProductsData", JSON.stringify(data));
+If it’s over 800KB, it shows a warning alert.
+
+It also shows live usage on your page like:
+Storage Used: 523.4 KB of 1000 KB */
+// ====================================================
+function estimateStorageUsage(data) {
+  let totalBytes = 0;
+
+  Object.keys(data).forEach(category => {
+    data[category].forEach(product => {
+      if (product.image) {
+  // If base64, count its size
+  if (product.image.startsWith("data:image")) {
+    totalBytes += product.image.length;
+  }
+}
+    });
+  });
+
+  const totalKB = totalBytes / 1024;
+  const usagePercent = (totalKB / 1000) * 100;
+
+  // Optional alert when you're close to the 1MB soft limit
+  if (totalKB > 800) {
+    alert(`⚠️ Warning: You’re using ${totalKB.toFixed(1)} KB out of 1000 KB.\nYou’re nearing the database size limit.`);
+  }
+
+  // Optional display inside a span on dashboard
+  const usageEl = document.getElementById("storage-usage");
+  if (usageEl) {
+    usageEl.textContent = `Storage Used: ${totalKB.toFixed(1)} KB of 1000 KB`;
+    usageEl.style.color = totalKB > 800 ? "red" : "green";
+  }
 }
