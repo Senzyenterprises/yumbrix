@@ -262,10 +262,25 @@ body {
   margin: 15px 0;
 }
 
+.popup-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: nowrap; /* ❗Don't allow wrapping */
+}
+
 .popup-actions button {
-  margin: 5px;
-  padding: 8px 12px;
+  background: #000;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 15px;
+  white-space: nowrap;     /* Prevent text wrapping */
+  flex: 0 0 auto;           /* ❗Don’t grow or shrink */
+  -webkit-appearance: none; /* Fix Safari/IOS */
+  appearance: none;
 }
 
 #close-popup {
