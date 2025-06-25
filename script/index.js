@@ -10,24 +10,29 @@ window.onload = function () {
   }
   setInterval(showSlides, 5000);
 
-// Header Scroll Behavior
+// Header Scroll Behavior + Close Mobile Nav on Scroll
 let prevScrollPos = window.pageYOffset;
 const header = document.getElementById("main-header");
+const mobileNav = document.getElementById("mobile-nav");
+const menuToggle = document.getElementById("menu-toggle");
+
 window.onscroll = () => {
   const currentScroll = window.pageYOffset;
   header.style.top = (prevScrollPos > currentScroll) ? "0" : "-80px";
   prevScrollPos = currentScroll;
+
+  // Close mobile nav on scroll
+  if (mobileNav.classList.contains("open")) {
+    mobileNav.classList.remove("open");
+  }
 };
 
 // Mobile Nav Toggle
-const menuToggle = document.getElementById("menu-toggle");
-const mobileNav = document.getElementById("mobile-nav");
-
 menuToggle.onclick = () => {
   mobileNav.classList.toggle("open");
 };
 
-// Close mobile nav if user clicks outside it
+// Close mobile nav on outside click
 document.addEventListener("click", (e) => {
   if (
     mobileNav.classList.contains("open") &&
