@@ -10,20 +10,34 @@ window.onload = function () {
   }
   setInterval(showSlides, 5000);
 
-  // Header Scroll Behavior
-  let prevScrollPos = window.pageYOffset;
-  const header = document.getElementById("main-header");
-  window.onscroll = () => {
-    const currentScroll = window.pageYOffset;
-    header.style.top = (prevScrollPos > currentScroll) ? "0" : "-80px";
-    prevScrollPos = currentScroll;
-  };
-
-  // Mobile Nav Toggle
-  document.getElementById("menu-toggle").onclick = () => {
-  const nav = document.getElementById("mobile-nav");
-  nav.classList.toggle("open");
+// Header Scroll Behavior
+let prevScrollPos = window.pageYOffset;
+const header = document.getElementById("main-header");
+window.onscroll = () => {
+  const currentScroll = window.pageYOffset;
+  header.style.top = (prevScrollPos > currentScroll) ? "0" : "-80px";
+  prevScrollPos = currentScroll;
 };
+
+// Mobile Nav Toggle
+const menuToggle = document.getElementById("menu-toggle");
+const mobileNav = document.getElementById("mobile-nav");
+
+menuToggle.onclick = () => {
+  mobileNav.classList.toggle("open");
+};
+
+// Close mobile nav if user clicks outside it
+document.addEventListener("click", (e) => {
+  if (
+    mobileNav.classList.contains("open") &&
+    !mobileNav.contains(e.target) &&
+    !menuToggle.contains(e.target)
+  ) {
+    mobileNav.classList.remove("open");
+  }
+});
+
 
   // Email Popup Logic
   const popup = document.getElementById("popup-overlay");
