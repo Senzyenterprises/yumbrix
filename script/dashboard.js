@@ -1,4 +1,4 @@
-// ✅ CLEANED dashboard.js — Fully working version with Firebase + localStorage fallback
+// ✅ CLEANED dashboard.js — Fully working version with Firebase + Auth
 
 let isEditing = false;
 let editingCategory = null;
@@ -17,8 +17,13 @@ const firebaseConfig = {
   appId: "1:912384112432:web:c0074c233e1dc35f52faf5",
   measurementId: "G-Q2V45TL4LP"
 };
-firebase.initializeApp(firebaseConfig);
+
+// Initialize Firebase only once
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.database();
+const auth = firebase.auth(); // Get the Auth service
 
 // =======================
 // DEFAULT PRODUCTS
@@ -67,19 +72,54 @@ const categorySelect = document.getElementById("product-category");
 const optionsWrapper = document.getElementById("options-wrapper");
 
 // =======================
-// INACTIVITY LOGOUT
+// AUTHENTICATION CHECK & INACTIVITY LOGOUT
 // =======================
+
+// This listener checks the auth state immediately and whenever it changes
+auth.onAuthStateChanged(user => {
+  if (user) {
+    // User is signed in. Allow access to dashboard content.
+    console.log("Admin user signed in:", user.uid);
+    // Remove the old localStorage check
+    // If you have other parts of your code that rely on localStorage.getItem("isYumbrixAdmin")
+    // you should replace them with a check against the 'user' object from auth.onAuthStateChanged
+    
+    // Start inactivity timer only if user is logged in
+    resetTimer(); 
+    
+    // Initialize product listening and rendering ONLY if an admin is logged in
+    listenToProducts();
+
+  } else {
+    // User is signed out or not authenticated. Redirect to login.
+    console.log("No admin user signed in. Redirecting to login.");
+    logout(); // This will sign out any Firebase user session and redirect
+  }
+});
+
+// Original logout function - now signs out from Firebase Auth
 function logout() {
-  localStorage.removeItem("isYumbrixAdmin");
-  window.location.href = "login.html";
+  auth.signOut().then(() => {
+    // Sign-out successful.
+    localStorage.removeItem("isYumbrixAdmin"); // Clean up old localStorage flag (optional)
+    window.location.href = "login.html";
+  }).catch((error) => {
+    console.error("Error signing out:", error);
+    // Even if signOut fails, force redirect to login
+    localStorage.removeItem("isYumbrixAdmin"); // Ensure flag is removed
+    window.location.href = "login.html";
+  });
 }
+
 let inactivityTimer;
 function resetTimer() {
   clearTimeout(inactivityTimer);
-  inactivityTimer = setTimeout(logout, 25 * 60 * 1000); // 25 minutes
+  // 25 minutes timer. This will now log out the Firebase user as well.
+  inactivityTimer = setTimeout(logout, 25 * 60 * 1000);
 }
 ["click", "mousemove", "keypress", "scroll"].forEach(evt => window.addEventListener(evt, resetTimer));
-resetTimer();
+// The initial call to resetTimer will happen after onAuthStateChanged confirms user.
+
 
 // =======================
 // CATEGORY TOGGLE
@@ -94,15 +134,18 @@ categorySelect.addEventListener("change", () => {
 function listenToProducts() {
   db.ref("products").on("value", snapshot => {
     const data = snapshot.val() || {};
-    localStorage.setItem("productData", JSON.stringify(data));
+    // localStorage.setItem("productData", JSON.stringify(data)); // This line might not be strictly needed for admin but doesn't hurt
     renderProductList(data);
-    estimateStorageUsage(data); // ← add this line
+    estimateStorageUsage(data);
   });
 }
 function renderProductList(data) {
   listContainer.innerHTML = "";
   Object.keys(data).forEach(category => {
-    data[category].forEach((product, index) => {
+    // Ensure data[category] is an array before trying to iterate
+    const categoryProducts = Array.isArray(data[category]) ? data[category] : Object.values(data[category] || {});
+
+    categoryProducts.forEach((product, index) => {
       const div = document.createElement("div");
       div.className = "product-entry";
       div.innerHTML = `
@@ -126,9 +169,9 @@ form.addEventListener("submit", (e) => {
   const imageInput = document.getElementById("product-image");
   const imageFile = imageInput.files[0];
   if (imageFile && imageFile.size > 1024 * 1024) { // 1MB
-  alert("Image is too large. Please compress it below 1MB.");
-  return;
-}
+    alert("Image is too large. Please compress it below 1MB.");
+    return;
+  }
   const optionsText = document.getElementById("product-options").value.trim();
   const options = optionsText ? optionsText.split(",").map(opt => opt.trim()) : undefined;
 
@@ -165,9 +208,14 @@ form.addEventListener("submit", (e) => {
         existing.push(product);
       }
 
-      db.ref("products/" + cat).set(existing, () => {
-        form.reset();
-        optionsWrapper.style.display = "none";
+      db.ref("products/" + cat).set(existing, (error) => {
+        if (error) {
+          console.error("Error saving product:", error);
+          alert("Error saving product. Check console for details. (Permission denied?)");
+        } else {
+          form.reset();
+          optionsWrapper.style.display = "none";
+        }
       });
     };
 
@@ -190,7 +238,16 @@ form.addEventListener("submit", (e) => {
 // =======================
 window.editProduct = function (category, index) {
   db.ref(`products/${category}`).once("value", snap => {
-    const p = snap.val()[index];
+    // Handle if snapshot.val() is null or not an array/object
+    const categoryData = snap.val();
+    const p = Array.isArray(categoryData) ? categoryData[index] : Object.values(categoryData || {})[index];
+
+    if (!p) {
+        console.error("Product not found for editing:", category, index);
+        alert("Product not found. Please refresh and try again.");
+        return;
+    }
+
     document.getElementById("edit-status").style.display = "block";
     document.getElementById("product-category").value = category;
     document.getElementById("product-name").value = p.name;
@@ -210,8 +267,18 @@ window.editProduct = function (category, index) {
 window.deleteProduct = function (category, index) {
   db.ref(`products/${category}`).once("value", snap => {
     const products = snap.val();
-    products.splice(index, 1);
-    db.ref(`products/${category}`).set(products);
+    if (products && Array.isArray(products)) { // Ensure it's an array before splicing
+        products.splice(index, 1);
+        db.ref(`products/${category}`).set(products, (error) => {
+            if (error) {
+                console.error("Error deleting product:", error);
+                alert("Error deleting product. Check console for details. (Permission denied?)");
+            }
+        });
+    } else {
+        console.error("Could not delete: products for category are not an array or are null.", products);
+        alert("Cannot delete product. Data structure mismatch.");
+    }
   });
 };
 
@@ -219,45 +286,45 @@ window.deleteProduct = function (category, index) {
 // RESET TO DEFAULT
 // =======================
 resetBtn.addEventListener("click", () => {
-  if (confirm("Are you sure you want to reset to default products?")) {
-    db.ref("products").set(defaultProducts, () => {
-      localStorage.setItem("productData", JSON.stringify(defaultProducts));
-      status.textContent = "✅ Reset successful.";
-      setTimeout(() => status.textContent = "", 2000);
+  if (confirm("Are you sure you want to reset to default products? This will overwrite ALL current product data.")) {
+    db.ref("products").set(defaultProducts, (error) => {
+      if (error) {
+        console.error("Error resetting products:", error);
+        status.textContent = "❌ Reset failed. (Permission denied?)";
+        status.style.color = "red";
+      } else {
+        localStorage.setItem("productData", JSON.stringify(defaultProducts)); // Keep this for the display site potentially
+        status.textContent = "✅ Reset successful.";
+        status.style.color = "green";
+        setTimeout(() => status.textContent = "", 2000);
+      }
     });
   }
 });
 
-// =======================
-// INIT
-// =======================
-  listenToProducts();
-
 // ==================================================
-//  ESTIMATE STORAGE SPACE
-/* When products are loaded, the script checks how much space is used.
-
-If it’s over 800KB, it shows a warning alert.
-
-It also shows live usage on your page like:
-Storage Used: 523.4 KB of 1000 KB */
+//  ESTIMATE STORAGE SPACE
 // ====================================================
 function estimateStorageUsage(data) {
   let totalBytes = 0;
 
   Object.keys(data).forEach(category => {
-    data[category].forEach(product => {
-      if (product.image) {
-  // If base64, count its size
-  if (product.image.startsWith("data:image")) {
-    totalBytes += product.image.length;
-  }
-}
+    const categoryData = data[category];
+    // Handle cases where categoryData might be an object (if Firebase pushes objects)
+    const productsArray = Array.isArray(categoryData) ? categoryData : Object.values(categoryData || {});
+
+    productsArray.forEach(product => {
+      if (product && product.image) { // Added null/undefined check for product
+        // If base64, count its size
+        if (product.image.startsWith("data:image")) {
+          totalBytes += product.image.length;
+        }
+      }
     });
   });
 
   const totalKB = totalBytes / 1024;
-  const usagePercent = (totalKB / 1000) * 100;
+  const usageEl = document.getElementById("storage-usage");
 
   // Optional alert when you're close to the 1MB soft limit
   if (totalKB > 800) {
@@ -265,9 +332,13 @@ function estimateStorageUsage(data) {
   }
 
   // Optional display inside a span on dashboard
-  const usageEl = document.getElementById("storage-usage");
   if (usageEl) {
     usageEl.textContent = `Storage Used: ${totalKB.toFixed(1)} KB of 1000 KB`;
     usageEl.style.color = totalKB > 800 ? "red" : "green";
   }
 }
+
+// Initial call to listenToProducts is now inside onAuthStateChanged,
+// so remove the standalone listenToProducts() call at the end.
+// This ensures data loading only happens after admin is authenticated.
+// You had listenToProducts() here.
